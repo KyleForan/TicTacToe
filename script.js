@@ -1,16 +1,19 @@
-const playerClasses = ['x', 'circle']
+const playerClasses = ['x', 'o']
+const playerWins = [0, 0]
+let circleTurn = true
+
 const cellElements = document.querySelectorAll('[data-cell]')
+const scores = document.getElementsByClassName('score')
+const oScore = document.getElementById('o-score')
 const board = document.getElementById('board')
 const winMsg = document.getElementById('win-msg')
 const restartbutton = winMsg.lastElementChild
-let circleTurn = true
 
 const winningCombos = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8],
     [0, 3, 6], [1, 4, 7], [2, 5, 8],
     [0, 4, 8], [2, 4, 6]
 ]
-
 
 let start = () => {
     cellElements.forEach(cell => {
@@ -59,7 +62,12 @@ let endGame = draw => {
         console.log(draw)
         winMsg.firstElementChild.innerHTML = "It's a draw"
     } else {
+
+        playerWins[+circleTurn]++
+
         winMsg.firstElementChild.innerHTML = `${circleTurn ? "O's" : "X's"} wins!`
+        scores[+circleTurn].innerHTML = `${playerClasses[+circleTurn].toUpperCase()}'s - ${playerWins[+circleTurn]}`
+
     }
 
     winMsg.classList.add('show')
